@@ -551,23 +551,8 @@ h2 {
   border-radius: var(--radius);
   padding: 30px;
   position: relative;
-}
-
-.testimonial-card.placeholder {
-  border: 1.5px dashed var(--color-gray-300);
-}
-
-.placeholder-tag {
-  display: inline-block;
-  background: var(--color-gray-100);
-  color: var(--color-gray-500);
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  padding: 4px 10px;
-  border-radius: 999px;
-  margin-bottom: 16px;
+  border: 1px solid var(--color-gray-300);
+  box-shadow: var(--shadow-soft);
 }
 
 .testimonial-card .stars {
@@ -590,16 +575,27 @@ h2 {
 }
 
 .testimonial-card .avatar {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: var(--color-gray-100);
   color: var(--color-gray-500);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
+  font-weight: 800;
+  font-size: 0.9rem;
   flex-shrink: 0;
+}
+
+.testimonial-card .avatar-a {
+  background: rgba(255, 107, 53, 0.14);
+  color: var(--color-orange-dark);
+}
+
+.testimonial-card .avatar-b {
+  background: rgba(15, 23, 42, 0.08);
+  color: var(--color-navy);
 }
 
 .testimonial-card .name {
