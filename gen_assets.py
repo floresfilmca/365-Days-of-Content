@@ -5,9 +5,9 @@ Requires Pillow (pip install pillow).
 """
 from PIL import Image, ImageDraw, ImageFont
 
-NAVY = (15, 23, 42)
-NAVY_LIGHT = (30, 41, 59)
-ORANGE = (255, 107, 53)
+NAVY = (2, 9, 58)
+NAVY_LIGHT = (12, 21, 80)
+ORANGE = (0, 117, 222)  # primary accent (Notion-style blue)
 WHITE = (255, 255, 255)
 SLATE = (203, 213, 225)
 

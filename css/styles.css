@@ -1,24 +1,45 @@
 /* =========================================================
    Drywall365 — Landing Page Stylesheet
+   Visual system adapted from a warm-paper / single-accent design
+   reference: off-white canvas, hairline-border cards (no shadows),
+   one chromatic action color, and a rotating cast of flat accent
+   hues for feature panels. Typography: Inter, tight tracking on
+   display sizes.
    ========================================================= */
 
 :root {
-  --color-navy: #0f172a;
-  --color-navy-light: #1e293b;
-  --color-orange: #ff6b35;
-  --color-orange-dark: #e55524;
-  --color-white: #ffffff;
-  --color-offwhite: #f8f9fb;
-  --color-gray-100: #f1f3f6;
-  --color-gray-300: #d7dce3;
-  --color-gray-500: #6b7280;
-  --color-gray-700: #374151;
-  --color-text: #1a2233;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* ---- Core surfaces & text (kept names for cross-page reuse) ---- */
+  --color-canvas: #f6f5f4;        /* page background — warm paper */
+  --color-white: #ffffff;         /* card surfaces */
+  --color-offwhite: #f6f5f4;      /* alias, same as canvas */
+  --color-text: #000000;          /* headings — solid ink black */
+  --color-navy: #02093a;          /* "midnight ink" — dark card / footer surface */
+  --color-navy-light: #0c1550;    /* lighter dark variant */
+  --color-gray-100: #efeeec;      /* light neutral fill (icon/avatar bg) */
+  --color-gray-300: rgba(0, 0, 0, 0.08); /* hairline border */
+  --color-gray-500: #615d59;      /* graphite — warm secondary text */
+  --color-gray-700: #1a1a1a;      /* near-black body text */
+
+  /* ---- Single chromatic action color ---- */
+  --color-orange: #0075de;        /* primary action (kept var name for minimal churn) */
+  --color-orange-dark: #005bb5;
+  --color-primary-tint: #e6f3fe;  /* ghost button / soft wash */
+
+  /* ---- Rotating accent cast (card backgrounds only) ---- */
+  --color-marigold: #ffb110;
+  --color-coral: #f64932;
+  --color-sky: #62aef0;
+  --color-signal-blue: #097fe8;
+
+  --font-body: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --max-width: 1120px;
-  --radius: 14px;
-  --shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.08);
-  --shadow-strong: 0 20px 50px rgba(15, 23, 42, 0.16);
+  --radius: 12px;
+  --radius-btn: 8px;
+
+  /* Elevation is reserved for the sticky nav and the product mockup only —
+     everything else uses a 1px hairline border instead of a shadow. */
+  --elevation-nav: 0px 0.7px 1.462px rgba(0, 0, 0, 0.02), 0px 3px 9px rgba(0, 0, 0, 0.04);
+  --elevation-mockup: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 * {
@@ -32,8 +53,8 @@ html {
 body {
   margin: 0;
   font-family: var(--font-body);
-  color: var(--color-text);
-  background: var(--color-white);
+  color: var(--color-gray-700);
+  background: var(--color-canvas);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
@@ -62,33 +83,36 @@ a {
   white-space: nowrap;
 }
 
+h1, h2, h3, h4 {
+  color: var(--color-text);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
 /* ---------- Buttons ---------- */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 16px 30px;
-  border-radius: 999px;
-  font-weight: 700;
-  font-size: 1.05rem;
+  padding: 14px 28px;
+  border-radius: var(--radius-btn);
+  font-weight: 600;
+  font-size: 1rem;
   text-decoration: none;
   border: none;
   cursor: pointer;
   white-space: nowrap;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  transition: background 0.2s ease, opacity 0.2s ease;
 }
 
 .btn-primary {
   background: var(--color-orange);
   color: var(--color-white);
-  box-shadow: 0 12px 24px rgba(255, 107, 53, 0.35);
 }
 
 .btn-primary:hover {
   background: var(--color-orange-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 16px 30px rgba(255, 107, 53, 0.4);
 }
 
 .btn-block {
@@ -96,8 +120,8 @@ a {
 }
 
 .btn-lg {
-  padding: 18px 36px;
-  font-size: 1.15rem;
+  padding: 16px 32px;
+  font-size: 1.05rem;
 }
 
 /* ---------- Header ---------- */
@@ -105,8 +129,8 @@ a {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(15, 23, 42, 0.96);
-  backdrop-filter: blur(6px);
+  background: var(--color-white);
+  box-shadow: var(--elevation-nav);
   padding: 14px 0;
 }
 
@@ -121,9 +145,9 @@ a {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: var(--color-white);
+  color: var(--color-text);
   text-decoration: none;
-  font-weight: 800;
+  font-weight: 700;
   font-size: 1.05rem;
   letter-spacing: -0.02em;
   white-space: nowrap;
@@ -137,66 +161,75 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-navy);
-  font-weight: 900;
+  color: var(--color-white);
+  font-weight: 700;
   font-size: 0.85rem;
 }
 
 .header-cta {
-  padding: 10px 22px;
-  font-size: 0.95rem;
+  padding: 10px 20px;
+  font-size: 0.92rem;
 }
 
 /* ---------- Hero ---------- */
 .hero {
-  background: radial-gradient(circle at 15% 0%, #1c2c4c 0%, var(--color-navy) 55%);
-  color: var(--color-white);
-  padding: 72px 0 96px;
+  padding: 72px 0 80px;
 }
 
 .hero .container {
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 56px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  text-align: center;
+  gap: 44px;
+}
+
+.hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 760px;
 }
 
 .eyebrow {
   display: inline-block;
-  background: rgba(255, 107, 53, 0.16);
-  color: #ffb08a;
-  border: 1px solid rgba(255, 107, 53, 0.4);
+  background: var(--color-primary-tint);
+  color: var(--color-orange);
   padding: 6px 16px;
-  border-radius: 999px;
+  border-radius: 9999px;
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   margin-bottom: 20px;
 }
 
 h1 {
-  font-size: clamp(2.1rem, 4vw, 3rem);
+  font-size: clamp(2.1rem, 4.2vw, 3.2rem);
   line-height: 1.15;
   margin: 0 0 20px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
 
-h1 span {
-  color: var(--color-orange);
+.pill-highlight {
+  display: inline-block;
+  background: var(--color-marigold);
+  color: #1a1200;
+  padding: 2px 20px;
+  border-radius: 9999px;
 }
 
 .hero-sub {
   font-size: 1.15rem;
-  color: #cbd5e1;
-  max-width: 540px;
+  color: var(--color-gray-500);
+  max-width: 560px;
   margin: 0 0 32px;
 }
 
 .hero-cta-row {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
   gap: 18px;
   margin-bottom: 22px;
@@ -205,9 +238,10 @@ h1 span {
 .trust-line {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 18px;
   font-size: 0.9rem;
-  color: #94a3b8;
+  color: var(--color-gray-500);
 }
 
 .trust-line span {
@@ -217,31 +251,34 @@ h1 span {
 }
 
 .hero-visual {
-  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .phone-mock {
-  background: linear-gradient(160deg, #1e293b, #0f172a);
-  border: 6px solid #0b1220;
-  border-radius: 34px;
-  padding: 20px;
-  box-shadow: var(--shadow-strong);
-  max-width: 340px;
-  margin: 0 auto;
+  background: var(--color-canvas);
+  border: 1px solid var(--color-gray-300);
+  border-radius: 20px;
+  padding: 22px;
+  box-shadow: var(--elevation-mockup);
+  max-width: 380px;
+  width: 100%;
+  text-align: left;
 }
 
 .phone-notch {
   width: 90px;
-  height: 18px;
-  background: #0b1220;
+  height: 14px;
+  background: var(--color-gray-300);
   border-radius: 12px;
-  margin: 0 auto 14px;
+  margin: 0 auto 16px;
 }
 
 .notif-card {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 16px;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--radius);
   padding: 16px;
   margin-bottom: 12px;
 }
@@ -251,7 +288,7 @@ h1 span {
   align-items: center;
   gap: 8px;
   font-size: 0.72rem;
-  color: #94a3b8;
+  color: var(--color-gray-500);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: 6px;
@@ -266,28 +303,33 @@ h1 span {
 
 .notif-card .notif-title {
   font-weight: 700;
-  color: var(--color-white);
+  color: var(--color-text);
   font-size: 0.95rem;
   margin-bottom: 4px;
 }
 
 .notif-card .notif-body {
   font-size: 0.85rem;
-  color: #cbd5e1;
+  color: var(--color-gray-500);
 }
 
 .notif-card.highlight {
-  background: rgba(255, 107, 53, 0.14);
-  border-color: rgba(255, 107, 53, 0.4);
+  border-color: var(--color-marigold);
+  border-width: 1.5px;
+  position: relative;
+}
+
+.notif-card.highlight .notif-dot {
+  background: var(--color-marigold);
 }
 
 /* ---------- Section basics ---------- */
 section {
-  padding: 88px 0;
+  padding: 80px 0;
 }
 
 .section-alt {
-  background: var(--color-offwhite);
+  background: transparent;
 }
 
 .section-head {
@@ -297,16 +339,14 @@ section {
 }
 
 .section-head .eyebrow {
-  background: rgba(255, 107, 53, 0.1);
-  color: var(--color-orange-dark);
-  border-color: rgba(255, 107, 53, 0.25);
+  background: var(--color-primary-tint);
+  color: var(--color-orange);
 }
 
 h2 {
-  font-size: clamp(1.7rem, 3vw, 2.3rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
   margin: 0 0 16px;
+  letter-spacing: -0.02em;
 }
 
 .section-head p {
@@ -319,7 +359,7 @@ h2 {
 .problem-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
+  gap: 24px;
   margin-top: 8px;
 }
 
@@ -327,7 +367,7 @@ h2 {
   background: var(--color-white);
   border: 1px solid var(--color-gray-300);
   border-radius: var(--radius);
-  padding: 28px;
+  padding: 24px;
 }
 
 .problem-card .icon {
@@ -352,35 +392,31 @@ h2 {
   font-weight: 700;
   max-width: 700px;
   margin: 48px auto 0;
-  color: var(--color-navy);
+  color: var(--color-text);
 }
 
-/* ---------- How it works ---------- */
+/* ---------- How it works — rotating accent panels ---------- */
 .steps {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-  counter-reset: step;
+  gap: 24px;
 }
 
 .step {
-  position: relative;
-  background: var(--color-white);
   border-radius: var(--radius);
-  padding: 32px 26px;
-  border: 1px solid var(--color-gray-300);
+  padding: 28px 24px;
 }
 
 .step-number {
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: var(--color-navy);
-  color: var(--color-white);
+  background: rgba(0, 0, 0, 0.1);
+  color: var(--color-text);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 800;
+  font-weight: 700;
   margin-bottom: 18px;
 }
 
@@ -390,32 +426,62 @@ h2 {
 }
 
 .step p {
-  color: var(--color-gray-500);
   margin: 0;
   font-size: 0.97rem;
+}
+
+.step-a {
+  background: var(--color-marigold);
+  color: #1a1200;
+}
+
+.step-a p {
+  color: rgba(26, 18, 0, 0.75);
+}
+
+.step-b {
+  background: var(--color-sky);
+  color: #051526;
+}
+
+.step-b p {
+  color: rgba(5, 21, 38, 0.72);
+}
+
+.step-c {
+  background: var(--color-coral);
+  color: var(--color-white);
+}
+
+.step-c p {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.step-c .step-number {
+  background: rgba(255, 255, 255, 0.22);
+  color: var(--color-white);
 }
 
 /* ---------- Features grid ---------- */
 .features-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: 20px;
 }
 
 .feature-card {
   background: var(--color-white);
   border-radius: var(--radius);
-  padding: 26px;
+  padding: 24px;
   border: 1px solid var(--color-gray-300);
-  box-shadow: var(--shadow-soft);
 }
 
 .feature-card .feature-icon {
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: rgba(255, 107, 53, 0.12);
-  color: var(--color-orange-dark);
+  background: var(--color-primary-tint);
+  color: var(--color-orange);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -434,7 +500,7 @@ h2 {
   margin: 0;
 }
 
-/* ---------- Example day preview ---------- */
+/* ---------- Example day preview — dark feature card ---------- */
 .example-wrap {
   display: grid;
   grid-template-columns: 0.85fr 1.15fr;
@@ -445,24 +511,24 @@ h2 {
 .example-card {
   background: var(--color-navy);
   color: var(--color-white);
-  border-radius: 20px;
-  padding: 32px;
-  box-shadow: var(--shadow-strong);
+  border-radius: var(--radius);
+  padding: 30px;
 }
 
 .example-card .example-tag {
   display: inline-block;
-  background: var(--color-orange);
-  color: var(--color-white);
-  font-weight: 800;
+  background: var(--color-marigold);
+  color: #1a1200;
+  font-weight: 700;
   font-size: 0.78rem;
-  padding: 5px 12px;
-  border-radius: 999px;
+  padding: 5px 14px;
+  border-radius: 9999px;
   margin-bottom: 16px;
   letter-spacing: 0.03em;
 }
 
 .example-card h4 {
+  color: var(--color-white);
   margin: 0 0 18px;
   font-size: 1.3rem;
   line-height: 1.3;
@@ -476,14 +542,14 @@ h2 {
   font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #ffb08a;
+  color: var(--color-sky);
   font-weight: 700;
   margin-bottom: 3px;
 }
 
 .example-field .value {
   font-size: 0.93rem;
-  color: #e2e8f0;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .example-copy h3 {
@@ -510,14 +576,14 @@ h2 {
 .trust-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
+  gap: 20px;
 }
 
 .trust-card {
   background: var(--color-white);
   border: 1px solid var(--color-gray-300);
   border-radius: var(--radius);
-  padding: 28px;
+  padding: 24px;
   display: flex;
   gap: 18px;
   align-items: flex-start;
@@ -539,39 +605,25 @@ h2 {
   font-size: 0.95rem;
 }
 
-/* ---------- Testimonials (placeholder cards) ---------- */
+/* ---------- Testimonials — clean review-card style ---------- */
 .testimonial-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 28px;
+  gap: 20px;
 }
 
 .testimonial-card {
   background: var(--color-white);
-  border-radius: var(--radius);
-  padding: 30px;
-  position: relative;
   border: 1px solid var(--color-gray-300);
-  box-shadow: var(--shadow-soft);
+  border-radius: var(--radius);
+  padding: 24px;
 }
 
-.testimonial-card .stars {
-  color: var(--color-orange);
-  letter-spacing: 2px;
-  margin-bottom: 14px;
-}
-
-.testimonial-card .quote {
-  font-size: 0.98rem;
-  color: var(--color-gray-700);
-  font-style: italic;
-  margin: 0 0 22px;
-}
-
-.testimonial-card .attribution {
+.testimonial-head {
   display: flex;
   align-items: center;
   gap: 12px;
+  margin-bottom: 12px;
 }
 
 .testimonial-card .avatar {
@@ -583,24 +635,25 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 800;
+  font-weight: 700;
   font-size: 0.9rem;
   flex-shrink: 0;
 }
 
 .testimonial-card .avatar-a {
-  background: rgba(255, 107, 53, 0.14);
-  color: var(--color-orange-dark);
+  background: var(--color-primary-tint);
+  color: var(--color-orange);
 }
 
 .testimonial-card .avatar-b {
-  background: rgba(15, 23, 42, 0.08);
-  color: var(--color-navy);
+  background: rgba(246, 73, 50, 0.12);
+  color: var(--color-coral);
 }
 
 .testimonial-card .name {
   font-weight: 700;
-  font-size: 0.92rem;
+  font-size: 0.95rem;
+  color: var(--color-text);
 }
 
 .testimonial-card .role {
@@ -608,20 +661,34 @@ h2 {
   color: var(--color-gray-500);
 }
 
-/* ---------- Pricing ---------- */
+.testimonial-card .stars {
+  color: var(--color-marigold);
+  letter-spacing: 2px;
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+}
+
+.testimonial-card .quote {
+  font-size: 0.96rem;
+  color: var(--color-gray-700);
+  font-style: normal;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ---------- Pricing — dark feature card ---------- */
 .pricing-card {
-  max-width: 520px;
+  max-width: 500px;
   margin: 0 auto;
   background: var(--color-navy);
   color: var(--color-white);
-  border-radius: 24px;
-  padding: 44px;
+  border-radius: 20px;
+  padding: 40px;
   text-align: center;
-  box-shadow: var(--shadow-strong);
 }
 
 .pricing-card .pricing-label {
-  color: #ffb08a;
+  color: var(--color-sky);
   font-weight: 700;
   text-transform: uppercase;
   font-size: 0.8rem;
@@ -638,18 +705,19 @@ h2 {
 }
 
 .price-amount {
-  font-size: 3.2rem;
-  font-weight: 800;
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .price-was {
   text-decoration: line-through;
-  color: #94a3b8;
+  color: rgba(255, 255, 255, 0.4);
   font-size: 1.2rem;
 }
 
 .pricing-card .price-note {
-  color: #94a3b8;
+  color: rgba(255, 255, 255, 0.6);
   margin-bottom: 28px;
 }
 
@@ -666,19 +734,19 @@ h2 {
   gap: 10px;
   margin-bottom: 12px;
   font-size: 0.97rem;
-  color: #e2e8f0;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .pricing-list li .check {
-  color: var(--color-orange);
-  font-weight: 900;
+  color: var(--color-marigold);
+  font-weight: 700;
   flex-shrink: 0;
 }
 
 .guarantee-note {
   margin-top: 20px;
   font-size: 0.88rem;
-  color: #94a3b8;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 /* ---------- FAQ ---------- */
@@ -697,8 +765,8 @@ h2 {
   border: none;
   text-align: left;
   font-family: inherit;
-  font-size: 1.05rem;
-  font-weight: 700;
+  font-size: 1.02rem;
+  font-weight: 600;
   padding: 22px 4px;
   cursor: pointer;
   display: flex;
@@ -718,7 +786,7 @@ h2 {
   align-items: center;
   justify-content: center;
   font-size: 1rem;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .faq-item.open .faq-question .plus {
@@ -741,11 +809,15 @@ h2 {
   padding-right: 40px;
 }
 
-/* ---------- Final CTA ---------- */
+/* ---------- Final CTA — accent panel ---------- */
 .final-cta {
-  background: linear-gradient(135deg, var(--color-navy), #1c2c4c);
+  background: var(--color-coral);
   color: var(--color-white);
   text-align: center;
+  border-radius: var(--radius);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 64px 40px;
 }
 
 .final-cta h2 {
@@ -753,18 +825,28 @@ h2 {
 }
 
 .final-cta p {
-  color: #cbd5e1;
+  color: rgba(255, 255, 255, 0.85);
   max-width: 560px;
   margin: 0 auto 32px;
   font-size: 1.08rem;
 }
 
+.final-cta .btn-primary {
+  background: var(--color-white);
+  color: var(--color-coral);
+}
+
+.final-cta .btn-primary:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
 /* ---------- Footer ---------- */
 .site-footer {
-  background: #0b1220;
-  color: #94a3b8;
+  background: var(--color-navy);
+  color: rgba(255, 255, 255, 0.6);
   padding: 48px 0 28px;
   font-size: 0.9rem;
+  margin-top: 40px;
 }
 
 .footer-top {
@@ -778,14 +860,14 @@ h2 {
 
 .footer-brand {
   color: var(--color-white);
-  font-weight: 800;
+  font-weight: 700;
   font-size: 1.05rem;
   margin-bottom: 8px;
 }
 
 .footer-tagline {
   max-width: 320px;
-  color: #64748b;
+  color: rgba(255, 255, 255, 0.45);
 }
 
 .footer-links {
@@ -795,7 +877,7 @@ h2 {
 }
 
 .footer-links a {
-  color: #94a3b8;
+  color: rgba(255, 255, 255, 0.6);
   text-decoration: none;
 }
 
@@ -804,32 +886,23 @@ h2 {
 }
 
 .footer-bottom {
-  border-top: 1px solid #1e293b;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
   padding-top: 20px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px;
-  color: #64748b;
+  color: rgba(255, 255, 255, 0.4);
   font-size: 0.85rem;
 }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
-  .hero .container {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-visual {
-    order: -1;
-    max-width: 320px;
-    margin: 0 auto;
-  }
-
   .problem-grid,
   .steps,
   .features-grid,
-  .trust-grid {
+  .trust-grid,
+  .testimonial-grid {
     grid-template-columns: 1fr;
   }
 
@@ -844,15 +917,20 @@ h2 {
 
 @media (max-width: 600px) {
   section {
-    padding: 60px 0;
+    padding: 56px 0;
   }
 
   .hero {
-    padding: 48px 0 64px;
+    padding: 48px 0 56px;
   }
 
   .pricing-card {
-    padding: 30px 22px;
+    padding: 28px 22px;
+  }
+
+  .final-cta {
+    padding: 48px 24px;
+    border-radius: 0;
   }
 
   .header-cta {
