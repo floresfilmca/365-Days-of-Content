@@ -5,11 +5,12 @@ Requires Pillow (pip install pillow).
 """
 from PIL import Image, ImageDraw, ImageFont
 
-NAVY = (2, 9, 58)
-NAVY_LIGHT = (12, 21, 80)
-ORANGE = (0, 117, 222)  # primary accent (Notion-style blue)
+NAVY = (10, 10, 15)          # near-black canvas
+NAVY_LIGHT = (16, 16, 20)
+ORANGE = (255, 90, 54)       # primary accent (bold orange)
+AMBER = (255, 176, 32)       # secondary accent for gradients
 WHITE = (255, 255, 255)
-SLATE = (203, 213, 225)
+SLATE = (154, 154, 165)
 
 FONT_BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 FONT_REG = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
@@ -46,19 +47,19 @@ def make_og_image(path):
     tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
     draw.text((mx + (mark_size - tw) / 2 - bbox[0], my + (mark_size - th) / 2 - bbox[1]), "365", font=f_mark, fill=NAVY)
 
-    f_brand = ImageFont.truetype(FONT_BOLD, 40)
-    draw.text((mx + mark_size + 22, my + 20), "Drywall365", font=f_brand, fill=WHITE)
+    f_brand = ImageFont.truetype(FONT_BOLD, 36)
+    draw.text((mx + mark_size + 22, my + 22), "365-Day Content System", font=f_brand, fill=WHITE)
 
     # Headline
-    f_head = ImageFont.truetype(FONT_BOLD, 58)
-    lines = ["365 Days of Ready-to-Post", "Content for Drywall Contractors"]
+    f_head = ImageFont.truetype(FONT_BOLD, 56)
+    lines = ["Stop Losing Jobs to Contractors", "Who Just Post More Often"]
     y = 230
     for line in lines:
         draw.text((80, y), line, font=f_head, fill=WHITE)
-        y += 72
+        y += 70
 
     f_sub = ImageFont.truetype(FONT_REG, 30)
-    draw.text((80, y + 20), "No app to download. Delivered straight to your calendar.", font=f_sub, fill=SLATE)
+    draw.text((80, y + 20), "365 days of ready-to-post content for drywall contractors.", font=f_sub, fill=SLATE)
 
     img.save(path, "PNG")
 
