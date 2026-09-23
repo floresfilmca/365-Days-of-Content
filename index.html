@@ -448,6 +448,43 @@
     </div>
   </section>
 
+  <!-- THE TRANSFORMATION / REAL COST COMPARISON -->
+  <section id="transformation" class="section-alt">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">The Real Trade-Off</span>
+        <h2>What This Actually Replaces</h2>
+        <p>This isn't just "content ideas." It's what most small businesses pay someone else thousands a year to do — for $27, one time.</p>
+      </div>
+
+      <div class="compare-grid">
+        <div class="compare-card compare-without">
+          <div class="compare-label">Without a System</div>
+          <ul class="compare-list">
+            <li><span class="x">✕</span> 5–10 hours a week lost to planning, filming, and second-guessing what to post</li>
+            <li><span class="x">✕</span> $400–$1,500/month for a social media manager or agency — <strong>$4,800–$18,000+ a year</strong></li>
+            <li><span class="x">✕</span> Inconsistent posting that never builds real authority or trust</li>
+            <li><span class="x">✕</span> A bill every single month, whether you post or not</li>
+          </ul>
+        </div>
+
+        <div class="compare-arrow" aria-hidden="true">→</div>
+
+        <div class="compare-card compare-with">
+          <div class="compare-label">With the 365 Content System</div>
+          <ul class="compare-list">
+            <li><span class="check">✓</span> 10 minutes a day — the plan's already made, you just film and post</li>
+            <li><span class="check">✓</span> $27 one time. No monthly fee, ever.</li>
+            <li><span class="check">✓</span> Daily posting that builds real authority and visibility, day after day</li>
+            <li><span class="check">✓</span> You own it forever — reuse it every year if you want</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="compare-source">Typical small-business social media management costs: Sprout Social, 2026. Average time small business owners spend on social media marketing: VerticalResponse survey via Calendar.com. Figures shown are industry averages, not guarantees of results for your business.</p>
+    </div>
+  </section>
+
   <!--
     SOCIAL PROOF — DEMO CONTENT, NOT REAL.
     "José Hernandez" and "Fábio Rodrigo" are fictional placeholders requested
@@ -600,6 +637,53 @@
         </div>
 
       </div>
+    </div>
+  </section>
+
+  <!-- CONTACT FORM -->
+  <!--
+    Powered by Web3Forms (free, no backend needed).
+    1. Go to https://web3forms.com, enter your email, and copy the Access Key it gives you.
+    2. Paste it below in place of YOUR_WEB3FORMS_ACCESS_KEY.
+    That's it — submissions arrive directly in your inbox.
+  -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Still Have a Question?</span>
+        <h2>Send Us a Message</h2>
+        <p>Reach out and we'll get back to you by email — usually within one business day.</p>
+      </div>
+
+      <form id="contact-form" class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
+        <input type="hidden" name="subject" value="New message from the Drywall365 website">
+        <input type="hidden" name="from_name" value="Drywall365 Website">
+        <input type="checkbox" name="botcheck" class="visually-hidden" tabindex="-1" autocomplete="off">
+
+        <div class="form-row">
+          <label for="contact-name">Name <span class="req">*</span></label>
+          <input type="text" id="contact-name" name="name" placeholder="Your full name" required>
+        </div>
+
+        <div class="form-row">
+          <label for="contact-email">Email <span class="req">*</span></label>
+          <input type="email" id="contact-email" name="email" placeholder="you@email.com" required>
+        </div>
+
+        <div class="form-row">
+          <label for="contact-phone">Phone <span class="req">*</span></label>
+          <input type="tel" id="contact-phone" name="phone" placeholder="(555) 555-5555" required>
+        </div>
+
+        <div class="form-row">
+          <label for="contact-message">Message</label>
+          <textarea id="contact-message" name="message" rows="4" placeholder="What can we help with?"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Send Message</button>
+        <p class="form-status" aria-live="polite"></p>
+      </form>
     </div>
   </section>
 

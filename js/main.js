@@ -46,4 +46,58 @@
       el.setAttribute("href", url);
     }
   });
+
+  // ---- Contact form (Web3Forms) ----
+  // Sends the form via fetch so the visitor never leaves the page.
+  // Requires a free access key from https://web3forms.com pasted into the
+  // hidden "access_key" input in index.html.
+  var contactForm = document.getElementById("contact-form");
+  if (contactForm) {
+    var statusEl = contactForm.querySelector(".form-status");
+    var submitBtn = contactForm.querySelector("button[type='submit']");
+
+    contactForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      var accessKey = contactForm.querySelector("input[name='access_key']").value;
+      if (!accessKey || accessKey.indexOf("YOUR_WEB3FORMS") !== -1) {
+        statusEl.textContent = "Form isn't fully set up yet — add your Web3Forms access key.";
+        statusEl.className = "form-status error";
+        return;
+      }
+
+      var originalBtnText = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Sending…";
+      statusEl.textContent = "";
+      statusEl.className = "form-status";
+
+      fetch(contactForm.action, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: new FormData(contactForm),
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          if (data.success) {
+            statusEl.textContent = "Thanks! Your message has been sent — we'll get back to you soon.";
+            statusEl.className = "form-status success";
+            contactForm.reset();
+          } else {
+            statusEl.textContent = "Something went wrong. Please try again or email us directly.";
+            statusEl.className = "form-status error";
+          }
+        })
+        .catch(function () {
+          statusEl.textContent = "Something went wrong. Please try again or email us directly.";
+          statusEl.className = "form-status error";
+        })
+        .finally(function () {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalBtnText;
+        });
+    });
+  }
 })();
